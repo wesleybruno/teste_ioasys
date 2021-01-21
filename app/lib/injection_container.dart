@@ -52,14 +52,12 @@ Future<void> init() async {
       repositorioDataSource: dependencia<ILoginDataSource>(),
     ),
   );
-  dependencia.registerFactory<ValidadorCampoTexto>(
-    () => ValidadorEmail(),
-  );
 
   dependencia.registerFactory(
     () => LoginCubit(
       loginRepository: dependencia<LoginRepository>(),
-      validadorEmail: dependencia<ValidadorCampoTexto>(),
+      validadorEmail: ValidadorEmail(),
+      validadorTamanho: ValidadorTamanho(),
     ),
   );
 }

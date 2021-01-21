@@ -10,6 +10,7 @@ import 'package:teste_selecao/features/login/screen/bloc/login_cubit.dart';
 import 'package:teste_selecao/injection_container.dart';
 import 'package:teste_selecao/widgets/botao_principal/botao_principal.dart';
 import 'package:teste_selecao/widgets/campo_form/campo_form.dart';
+import 'package:teste_selecao/widgets/error_widgets/sem_internet_widget.dart';
 import 'package:teste_selecao/widgets/loading_blur_screen/loading_blur_screen.dart';
 import 'package:teste_selecao/widgets/top_clipper/top_clipper.dart';
 
@@ -38,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void aoApertarLogin(BuildContext context) {
+  void _aoApertarLogin(BuildContext context) {
     FocusManager.instance.primaryFocus.unfocus();
     BlocProvider.of<LoginCubit>(context).realizarLogin(
       _controllerEmail.text,
@@ -46,8 +47,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void irParaHome() {
+  _irParaHome() {
     dependencia<ILoginNavigator>().irParaHome(podeVoltar: false);
+  }
+
+  _aoApertarIconeOlho(BuildContext context, bool estaVisivel) {
+    BlocProvider.of<LoginCubit>(context).alterarVisibilidadeSenha(estaVisivel);
+  }
+
+  _validarDados(BuildContext context) {
+    BlocProvider.of<LoginCubit>(context).validarDados(
+      _controllerEmail.text,
+      _controllerSenha.text,
+    );
   }
 
   @override
@@ -57,85 +69,149 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is CredenciaisValidasState) {
-            irParaHome();
+            _irParaHome();
           }
         },
         builder: (context, state) {
+          if (state is NoInternet)
+            return SemInternetWidget(
+              aoApertarTentarNovamente: () => _aoApertarLogin(context),
+            );
+
           return LoadingBlurScreen(
             enabled: state is LoadingState,
             child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
+              behavior: HitTestBehavior.translucent,
               child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TopClipper(
-                      texto: Strings.textoTopClipper,
-                    ),
-                    CampoForm(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.w,
-                        vertical: 5.h,
+                child: Container(
+                  height: DimensoesTela.altura,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      TopClipper(
+                        texto: Strings.textoTopClipper,
                       ),
-                      titulo: Strings.email,
-                      keyboardType: TextInputType.emailAddress,
-                      fillColor: Cores.cinza[100],
-                      possuiErro: state is CredenciaisInvalidasState,
-                      borderColor: Cores.vermelhorErro,
-                      suffixIcon: null,
-                    ),
-                    CampoForm(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.w,
-                        vertical: 5.h,
+                      _buildCampoForm(
+                        Strings.email,
+                        _controllerEmail,
+                        state is CredenciaisInvalidasState,
+                        false,
+                        context,
+                        state is CredenciaisInvalidasState,
+                        icone: IconesAplicacao.iconeErro,
+                        aoApertarIcone: null,
                       ),
-                      titulo: Strings.senha,
-                      fillColor: Cores.cinza[100],
-                      obscureText: true,
-                      possuiErro: state is CredenciaisInvalidasState,
-                      borderColor: Cores.vermelhorErro,
-                      suffixIcon: Container(
-                        height: 25.h,
-                        width: 25.w,
-                        padding: EdgeInsets.all(12.w),
-                        child: Image.asset(IconesAplicacao.iconeOlho),
-                      ),
-                    ),
-                    if (state is CredenciaisInvalidasState)
-                      Container(
-                        margin: EdgeInsets.only(
-                          right: 20.w,
-                        ),
-                        child: Text(
-                          Strings.credenciaisInvalidas,
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 12.ssp,
-                            color: Cores.vermelhorErro,
-                          ),
+                      _buildCampoForm(
+                        Strings.senha,
+                        _controllerSenha,
+                        state is CredenciaisInvalidasState,
+                        state is SenhaVisivelState ? false : true,
+                        context,
+                        true,
+                        icone: state is CredenciaisInvalidasState
+                            ? IconesAplicacao.iconeErro
+                            : IconesAplicacao.iconeOlho,
+                        aoApertarIcone: () => _aoApertarIconeOlho(
+                          context,
+                          state is SenhaVisivelState,
                         ),
                       ),
-                    Padding(
-                      padding: EdgeInsets.all(30.w),
-                      child: BotaoPrincipal(
-                        aoClicar: () => aoApertarLogin(context),
-                        texto: Strings.entrar,
-                        textStyle: TextStyle(
-                          fontSize: 16.ssp,
-                          fontWeight: Fontes.semiBold,
-                          color: Cores.branco,
-                        ),
-                        altura: 48.h,
-                        raioBorda: 8.w,
-                      ),
-                    )
-                  ],
+                      if (state is CredenciaisInvalidasState)
+                        _buildMessagemCredenciaisInvalidas(),
+                      _buildButton(state is DadosValidoState, context),
+                    ],
+                  ),
                 ),
               ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  _buildCampoForm(
+    String texto,
+    TextEditingController controller,
+    bool possuiErro,
+    bool esconderCaracteres,
+    BuildContext context,
+    bool exibirIcone, {
+    String icone,
+    Function aoApertarIcone,
+  }) {
+    return CampoForm(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.w,
+        vertical: 5.h,
+      ),
+      titulo: texto,
+      keyboardType: TextInputType.emailAddress,
+      obscureText: esconderCaracteres,
+      fillColor: Cores.cinza[100],
+      controller: controller,
+      possuiErro: possuiErro,
+      borderColor: Cores.vermelhorErro,
+      suffixIcon: exibirIcone
+          ? _buildIcon(
+              icone ?? IconesAplicacao.iconeErro,
+              aoApertar: aoApertarIcone,
+            )
+          : null,
+      onChange: (_) => _validarDados(context),
+    );
+  }
+
+  _buildMessagemCredenciaisInvalidas() {
+    return Container(
+      margin: EdgeInsets.only(
+        right: 20.w,
+      ),
+      child: Text(
+        Strings.credenciaisInvalidas,
+        textAlign: TextAlign.right,
+        style: TextStyle(
+          fontSize: 12.ssp,
+          color: Cores.vermelhorErro,
+        ),
+      ),
+    );
+  }
+
+  _buildButton(bool habilitar, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 30.w,
+        right: 30.w,
+        top: 30.h,
+        bottom: 80.h,
+      ),
+      child: BotaoPrincipal(
+        aoClicar: () => _aoApertarLogin(context),
+        habilitar: habilitar,
+        corDesabilitado: Cores.cinza[200],
+        texto: Strings.entrar,
+        textStyle: TextStyle(
+          fontSize: 16.ssp,
+          fontWeight: Fontes.semiBold,
+          color: Cores.branco,
+        ),
+        altura: 48.h,
+        raioBorda: 8.w,
+      ),
+    );
+  }
+
+  _buildIcon(String icone, {Function aoApertar}) {
+    return GestureDetector(
+      onTap: aoApertar,
+      child: Container(
+        height: 25.h,
+        width: 25.w,
+        padding: EdgeInsets.all(12.w),
+        child: Image.asset(icone),
       ),
     );
   }

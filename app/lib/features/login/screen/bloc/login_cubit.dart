@@ -9,20 +9,36 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginRepository _loginRepository;
   final ValidadorEmail _validadorEmail;
+  final ValidadorTamanho _validadorTamanho;
 
   LoginCubit({
     @required LoginRepository loginRepository,
     @required ValidadorEmail validadorEmail,
+    @required ValidadorTamanho validadorTamanho,
   })  : _loginRepository = loginRepository,
         _validadorEmail = validadorEmail,
+        _validadorTamanho = validadorTamanho,
         super(
           LoginInicialState(),
         );
 
-  void validarLogin(String email) {
-    final resultValidarEmail = _validadorEmail.isTextoValido(texto: email);
-    if (!resultValidarEmail) {
-      emit(EmailInvalidoState());
+  bool _validarLogin(String email) =>
+      _validadorEmail.isTextoValido(texto: email);
+
+  bool _validarSenha(String senha) =>
+      _validadorTamanho.isTextoValido(texto: senha);
+
+  void alterarVisibilidadeSenha(bool estaVisivel) =>
+      !estaVisivel ? emit(SenhaVisivelState()) : emit(LoginInicialState());
+
+  void validarDados(String email, String senha) {
+    final loginValido = _validarLogin(email);
+    final senhaValida = _validarSenha(senha);
+
+    if (loginValido && senhaValida) {
+      emit(DadosValidoState());
+    } else {
+      emit(DadosInvalidoState());
     }
   }
 
@@ -30,9 +46,14 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoadingState());
     final result = await _loginRepository.realizarLogin(email, password);
     result.fold(
-      (error) => emit(CredenciaisInvalidasState(
-        mensagem: error.message,
-      )),
+      (error) {
+        if (error.statusCode == null) {
+          return emit(NoInternet());
+        }
+        emit(CredenciaisInvalidasState(
+          mensagem: error.message,
+        ));
+      },
       (sucesso) => emit(CredenciaisValidasState()),
     );
   }

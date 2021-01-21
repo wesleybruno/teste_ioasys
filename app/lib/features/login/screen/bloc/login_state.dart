@@ -14,7 +14,17 @@ class LoadingState extends LoginState {
   List<Object> get props => [];
 }
 
-class EmailInvalidoState extends LoginState {
+class SenhaVisivelState extends LoginState {
+  @override
+  List<Object> get props => [];
+}
+
+class DadosInvalidoState extends LoginState {
+  @override
+  List<Object> get props => [];
+}
+
+class DadosValidoState extends LoginState {
   @override
   List<Object> get props => [];
 }
@@ -27,6 +37,16 @@ class CredenciaisInvalidasState extends LoginState {
 }
 
 class CredenciaisValidasState extends LoginState {
+  @override
+  List<Object> get props => [];
+}
+
+class NoInternet extends LoginState {
+  @override
+  List<Object> get props => [];
+}
+
+class ApiError extends LoginState {
   @override
   List<Object> get props => [];
 }
