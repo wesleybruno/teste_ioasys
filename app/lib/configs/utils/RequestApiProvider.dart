@@ -3,9 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:teste_selecao/configs/client/check_connectivty.dart';
 import 'package:teste_selecao/configs/client/custom_dio.dart';
+import 'package:teste_selecao/configs/utils/ApiResult.dart';
+import 'package:teste_selecao/configs/utils/Endpoint.dart';
 import 'package:teste_selecao/injection_container.dart';
-import 'package:teste_selecao/utils/ApiResult.dart';
-import 'package:teste_selecao/utils/Endpoint.dart';
 
 class RequestApiProvider {
   CustomDio _customDio;

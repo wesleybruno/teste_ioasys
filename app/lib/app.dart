@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sailor/sailor.dart';
 import 'package:teste_selecao/configs/routes/routes.dart';
-import 'package:teste_selecao/features/login/screen/splash_screen.dart';
-import 'package:teste_selecao/ui/Fontes.dart';
+import 'package:teste_selecao/configs/ui/Cores.dart';
+import 'package:teste_selecao/configs/ui/Fontes.dart';
+import 'package:teste_selecao/features/login/screen/login_screen.dart';
 
 class IoasysSelecao extends StatelessWidget {
   @override
@@ -19,7 +20,10 @@ class IoasysSelecao extends StatelessWidget {
         SailorLoggingObserver(),
         Routes.sailor.navigationStackObserver,
       ],
-      home: SplashScreen(),
+      home: Scaffold(
+        body: LoginScreen(),
+        backgroundColor: Cores.cinza[50],
+      ),
     );
   }
 }

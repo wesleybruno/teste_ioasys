@@ -5,9 +5,18 @@ import 'package:teste_selecao/configs/routes/routes.dart';
 
 class LoginNavigator implements ILoginNavigator {
   @override
-  irParaHome(bool podeVoltar) {
+  irParaHome({bool podeVoltar = false}) {
     Routes.sailor.navigate(
       LoginRoutes.home,
+      navigationType:
+          podeVoltar ? NavigationType.push : NavigationType.popAndPushNamed,
+    );
+  }
+
+  @override
+  irParaLogin({bool podeVoltar = false}) {
+    Routes.sailor.navigate(
+      LoginRoutes.login,
       navigationType:
           podeVoltar ? NavigationType.push : NavigationType.popAndPushNamed,
     );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:teste_selecao/ui/Cores.dart';
-import 'package:teste_selecao/ui/DimensoesTela.dart';
-import 'package:teste_selecao/ui/Icones.dart';
+import 'package:teste_selecao/configs/ui/DimensoesTela.dart';
+import 'package:teste_selecao/configs/ui/Icones.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -32,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.all(20.w),
+              padding: EdgeInsets.all(100.w),
               child: Image.asset(
                 IconesAplicacao.logoHome,
               ),

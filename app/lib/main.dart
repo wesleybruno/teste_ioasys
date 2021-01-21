@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:teste_selecao/app.dart';
 import 'package:teste_selecao/configs/routes/routes.dart';
+import 'package:teste_selecao/configs/ui/Cores.dart';
 import 'package:teste_selecao/injection_container.dart' as injection;
-import 'package:teste_selecao/ui/Cores.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

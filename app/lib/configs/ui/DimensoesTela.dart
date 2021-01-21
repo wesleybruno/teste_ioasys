@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 abstract class DimensoesTela {
-  static double get _alturaDesing => 896;
+  static double get _alturaDesing => 667;
 
-  static double get _larguraDesing => 414;
+  static double get _larguraDesing => 375;
 
   static double get largura {
     return MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width;

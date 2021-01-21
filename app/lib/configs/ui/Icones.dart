@@ -12,4 +12,7 @@ class IconesAplicacao {
   static String get iconeVoltar => _comum(nomeIcone: 'icone_voltar');
   static String get logoHome => _comum(nomeIcone: 'logo_home');
   static String get logo => _comum(nomeIcone: 'logo');
+
+  static String get ellipseExterna => _comum(nomeIcone: 'ellipse_externa');
+  static String get ellipseInterna => _comum(nomeIcone: 'ellipse_interna');
 }
