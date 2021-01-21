@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sailor/sailor.dart';
 import 'package:teste_selecao/features/home/screen/home_screen.dart';
 import 'package:teste_selecao/features/login/screen/login_screen.dart';
-import 'package:teste_selecao/features/login/screen/splash_screen.dart';
+import 'package:teste_selecao/features/splash/screens/splash_screen.dart';
 
 abstract class LoginRoutes {
   static final splashScreen = '/splash';

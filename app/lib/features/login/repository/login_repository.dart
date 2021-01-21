@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:teste_selecao/configs/utils/ApiResult.dart';
 import 'package:teste_selecao/features/login/datasource/login_datasource.dart';
+import 'package:teste_selecao/features/login/models/cabecalho_model.dart';
 import 'package:teste_selecao/features/login/models/login_model.dart';
 import 'package:teste_selecao/features/login/models/usuario_model.dart';
 import 'package:teste_selecao/features/login/repository/login_decode_helper.dart';
@@ -37,5 +38,20 @@ class LoginRepository {
     String accessToken,
   ) async {
     this._dataSource.salvarCabecalhosLocal(uuid, client, accessToken);
+  }
+
+  Future<CabecalhoModel> buscarCabecalhosLocal() async {
+    final uid = await this._dataSource.buscarCabecalhoLocal('uid');
+    final client = await this._dataSource.buscarCabecalhoLocal('client');
+    final accessToken =
+        await this._dataSource.buscarCabecalhoLocal('access-token');
+
+    final cabecalho = CabecalhoModel(
+      uid: uid,
+      client: client,
+      acessToken: accessToken,
+    );
+
+    return cabecalho;
   }
 }

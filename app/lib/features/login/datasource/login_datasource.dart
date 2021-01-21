@@ -6,7 +6,9 @@ import 'package:teste_selecao/configs/utils/RequestApiProvider.dart';
 
 abstract class ILoginDataSource {
   Future<ApiResult> realizarLogin({Map<String, dynamic> body});
-  void salvarCabecalhosLocal(String uuid, String client, String accessToken);
+  Future<void> salvarCabecalhosLocal(
+      String uid, String client, String accessToken);
+  Future<dynamic> buscarCabecalhoLocal(String chave);
 }
 
 class LoginDataSource implements ILoginDataSource {
@@ -31,9 +33,15 @@ class LoginDataSource implements ILoginDataSource {
   }
 
   @override
-  salvarCabecalhosLocal(String uuid, String client, String accessToken) {
-    this._localStorage.save('uuid', uuid);
-    this._localStorage.save('client', client);
-    this._localStorage.save('access-token', accessToken);
+  Future<void> salvarCabecalhosLocal(
+      String uid, String client, String accessToken) async {
+    await this._localStorage.save('uid', uid);
+    await this._localStorage.save('client', client);
+    await this._localStorage.save('access-token', accessToken);
+  }
+
+  @override
+  Future<dynamic> buscarCabecalhoLocal(String chave) async {
+    return await this._localStorage.read(chave);
   }
 }

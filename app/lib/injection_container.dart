@@ -12,6 +12,8 @@ import 'package:teste_selecao/features/login/repository/login_repository.dart';
 import 'package:teste_selecao/features/login/screen/bloc/login_cubit.dart';
 import 'package:teste_selecao/features/login/usecases/gravar_cabecalhos_local_usecase.dart';
 import 'package:teste_selecao/features/login/usecases/realizar_login_usecase.dart';
+import 'package:teste_selecao/features/splash/screens/bloc/splash_cubit.dart';
+import 'package:teste_selecao/features/splash/usecases/buscar_cabecalhos_local_usecase.dart';
 
 final dependencia = GetIt.instance;
 
@@ -68,8 +70,21 @@ Future<void> init() async {
     ),
   );
 
+  dependencia.registerLazySingleton<BuscarCabecalhosLocalLoginUseCase>(
+    () => BuscarCabecalhosLocalLoginUseCase(
+      loginRepository: dependencia<LoginRepository>(),
+    ),
+  );
+
   dependencia.registerFactory(
-    () => LoginCubit(
+    () => SplashCubit(
+      buscarCabecalhosLocalLoginUseCase:
+          dependencia<BuscarCabecalhosLocalLoginUseCase>(),
+    ),
+  );
+
+  dependencia.registerFactory(
+    () => LoginScreenCubit(
       validadorEmail: ValidadorEmail(),
       validadorTamanho: ValidadorTamanho(),
       realizarLoginUseCase: dependencia<RealizarLoginUseCase>(),

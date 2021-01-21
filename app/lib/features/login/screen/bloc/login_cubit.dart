@@ -2,19 +2,18 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teste_selecao/configs/utils/Validadores.dart';
-import 'package:teste_selecao/features/login/repository/login_repository.dart';
 import 'package:teste_selecao/features/login/usecases/gravar_cabecalhos_local_usecase.dart';
 import 'package:teste_selecao/features/login/usecases/realizar_login_usecase.dart';
 
 part 'login_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
+class LoginScreenCubit extends Cubit<LoginState> {
   final RealizarLoginUseCase _realizarLoginUseCase;
   final GravarCabecalhosLocalLoginUseCase _gravarCabecalhosLocalLoginUseCase;
   final ValidadorEmail _validadorEmail;
   final ValidadorTamanho _validadorTamanho;
 
-  LoginCubit({
+  LoginScreenCubit({
     @required
         GravarCabecalhosLocalLoginUseCase gravarCabecalhosLocalLoginUseCase,
     @required RealizarLoginUseCase realizarLoginUseCase,

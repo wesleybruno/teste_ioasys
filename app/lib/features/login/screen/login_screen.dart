@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _aoApertarLogin(BuildContext context) {
     FocusManager.instance.primaryFocus.unfocus();
-    BlocProvider.of<LoginCubit>(context).realizarLogin(
+    BlocProvider.of<LoginScreenCubit>(context).realizarLogin(
       _controllerEmail.text,
       _controllerSenha.text,
     );
@@ -52,11 +52,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _aoApertarIconeOlho(BuildContext context, bool estaVisivel) {
-    BlocProvider.of<LoginCubit>(context).alterarVisibilidadeSenha(estaVisivel);
+    BlocProvider.of<LoginScreenCubit>(context)
+        .alterarVisibilidadeSenha(estaVisivel);
   }
 
   _validarDados(BuildContext context) {
-    BlocProvider.of<LoginCubit>(context).validarDados(
+    BlocProvider.of<LoginScreenCubit>(context).validarDados(
       _controllerEmail.text,
       _controllerSenha.text,
     );
@@ -65,8 +66,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => dependencia<LoginCubit>(),
-      child: BlocConsumer<LoginCubit, LoginState>(
+      create: (_) => dependencia<LoginScreenCubit>(),
+      child: BlocConsumer<LoginScreenCubit, LoginState>(
         listener: (context, state) {
           if (state is CredenciaisValidasState) {
             _irParaHome();
