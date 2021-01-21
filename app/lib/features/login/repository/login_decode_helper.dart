@@ -10,7 +10,14 @@ class LoginDecodeHelper {
       {@required ApiResult result}) {
     try {
       if (result is Success) {
-        return Right(UsuarioModel.fromJson(result.data));
+        final uuid = result.responseHeaders["uid"];
+        final client = result.responseHeaders["client"];
+        final accessToken = result.responseHeaders["access-token"];
+        final usuarioModel = UsuarioModel.fromJson(result.data);
+
+        usuarioModel.setAccessData(uuid, client, accessToken);
+
+        return Right(usuarioModel);
       }
 
       if (result is Failure) {

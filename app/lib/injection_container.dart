@@ -10,6 +10,8 @@ import 'package:teste_selecao/features/login/datasource/login_datasource.dart';
 import 'package:teste_selecao/features/login/repository/login_decode_helper.dart';
 import 'package:teste_selecao/features/login/repository/login_repository.dart';
 import 'package:teste_selecao/features/login/screen/bloc/login_cubit.dart';
+import 'package:teste_selecao/features/login/usecases/gravar_cabecalhos_local_usecase.dart';
+import 'package:teste_selecao/features/login/usecases/realizar_login_usecase.dart';
 
 final dependencia = GetIt.instance;
 
@@ -39,6 +41,7 @@ Future<void> init() async {
   dependencia.registerLazySingleton<ILoginDataSource>(
     () => LoginDataSource(
       apiProvider: dependencia<RequestApiProvider>(),
+      localStorage: dependencia<ILocalStorage>(),
     ),
   );
 
@@ -53,11 +56,25 @@ Future<void> init() async {
     ),
   );
 
+  dependencia.registerLazySingleton<RealizarLoginUseCase>(
+    () => RealizarLoginUseCase(
+      loginRepository: dependencia<LoginRepository>(),
+    ),
+  );
+
+  dependencia.registerLazySingleton<GravarCabecalhosLocalLoginUseCase>(
+    () => GravarCabecalhosLocalLoginUseCase(
+      loginRepository: dependencia<LoginRepository>(),
+    ),
+  );
+
   dependencia.registerFactory(
     () => LoginCubit(
-      loginRepository: dependencia<LoginRepository>(),
       validadorEmail: ValidadorEmail(),
       validadorTamanho: ValidadorTamanho(),
+      realizarLoginUseCase: dependencia<RealizarLoginUseCase>(),
+      gravarCabecalhosLocalLoginUseCase:
+          dependencia<GravarCabecalhosLocalLoginUseCase>(),
     ),
   );
 }

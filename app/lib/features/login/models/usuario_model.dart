@@ -2,10 +2,24 @@ class UsuarioModel {
   Investor investor;
   bool success;
 
+  String uid;
+  String accessToken;
+  String client;
+
   UsuarioModel({
     this.investor,
     this.success,
   });
+
+  setAccessData(
+    String newUid,
+    String newAccessToken,
+    String newClient,
+  ) {
+    uid = newUid;
+    accessToken = newAccessToken;
+    client = newClient;
+  }
 
   UsuarioModel.fromJson(Map<String, dynamic> json) {
     investor = json['investor'] != null

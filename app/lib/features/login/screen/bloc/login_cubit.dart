@@ -3,19 +3,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teste_selecao/configs/utils/Validadores.dart';
 import 'package:teste_selecao/features/login/repository/login_repository.dart';
+import 'package:teste_selecao/features/login/usecases/gravar_cabecalhos_local_usecase.dart';
+import 'package:teste_selecao/features/login/usecases/realizar_login_usecase.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginRepository _loginRepository;
+  final RealizarLoginUseCase _realizarLoginUseCase;
+  final GravarCabecalhosLocalLoginUseCase _gravarCabecalhosLocalLoginUseCase;
   final ValidadorEmail _validadorEmail;
   final ValidadorTamanho _validadorTamanho;
 
   LoginCubit({
-    @required LoginRepository loginRepository,
+    @required
+        GravarCabecalhosLocalLoginUseCase gravarCabecalhosLocalLoginUseCase,
+    @required RealizarLoginUseCase realizarLoginUseCase,
     @required ValidadorEmail validadorEmail,
     @required ValidadorTamanho validadorTamanho,
-  })  : _loginRepository = loginRepository,
+  })  : _gravarCabecalhosLocalLoginUseCase = gravarCabecalhosLocalLoginUseCase,
+        _realizarLoginUseCase = realizarLoginUseCase,
         _validadorEmail = validadorEmail,
         _validadorTamanho = validadorTamanho,
         super(
@@ -44,17 +50,22 @@ class LoginCubit extends Cubit<LoginState> {
 
   void realizarLogin(String email, String password) async {
     emit(LoadingState());
-    final result = await _loginRepository.realizarLogin(email, password);
-    result.fold(
-      (error) {
-        if (error.statusCode == null) {
-          return emit(NoInternet());
-        }
-        emit(CredenciaisInvalidasState(
-          mensagem: error.message,
-        ));
-      },
-      (sucesso) => emit(CredenciaisValidasState()),
-    );
+    final result = await _realizarLoginUseCase(email, password);
+
+    result.fold((error) {
+      if (error.statusCode == null) {
+        return emit(NoInternet());
+      }
+      emit(CredenciaisInvalidasState(
+        mensagem: error.message,
+      ));
+    }, (usuario) {
+      _gravarCabecalhosLocalLoginUseCase(
+        usuario.uid,
+        usuario.client,
+        usuario.accessToken,
+      );
+      return emit(CredenciaisValidasState());
+    });
   }
 }

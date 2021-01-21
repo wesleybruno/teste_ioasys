@@ -45,14 +45,21 @@ class RequestApiProvider {
       }
 
       if (response.data != null && response.statusCode < 300) {
+        final Map<String, dynamic> responseHeaders = {
+          "uid": response?.headers?.value('uid'),
+          "client": response?.headers?.value("client"),
+          "access-token": response?.headers?.value("access-token"),
+        };
         return response.data is List
             ? Success(
                 dataList: response.data,
                 statusCode: response.statusCode,
+                responseHeaders: responseHeaders,
               )
             : Success(
                 data: response.data is Map ? response.data : {"resp": true},
                 statusCode: response.statusCode,
+                responseHeaders: responseHeaders,
               );
       }
 

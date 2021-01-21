@@ -30,4 +30,12 @@ class LoginRepository {
         );
     return _decodeHelper.decodeRepositorios(result: result);
   }
+
+  void salvarCabecalhosLocal(
+    String uuid,
+    String client,
+    String accessToken,
+  ) async {
+    this._dataSource.salvarCabecalhosLocal(uuid, client, accessToken);
+  }
 }

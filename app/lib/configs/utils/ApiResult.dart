@@ -1,15 +1,17 @@
 abstract class ApiResult {
   String message;
   int statusCode;
+
   Map<String, dynamic> data;
 }
 
 class Success implements ApiResult {
   int statusCode;
   Map<String, dynamic> data;
+  Map<String, dynamic> responseHeaders;
   List dataList;
   String message;
-  Success({this.statusCode, this.data, this.dataList});
+  Success({this.statusCode, this.data, this.dataList, this.responseHeaders});
 }
 
 class Failure implements ApiResult {
