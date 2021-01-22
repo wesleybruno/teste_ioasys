@@ -34,7 +34,7 @@ class _TopClipperState extends State<TopClipper>
   void _criarAnimationController() {
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 2000),
     );
 
     _animation = Tween<double>(

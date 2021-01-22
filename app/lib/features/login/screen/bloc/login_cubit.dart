@@ -33,9 +33,6 @@ class LoginScreenCubit extends Cubit<LoginState> {
   bool _validarSenha(String senha) =>
       _validadorTamanho.isTextoValido(texto: senha);
 
-  void alterarVisibilidadeSenha(bool estaVisivel) =>
-      !estaVisivel ? emit(SenhaVisivelState()) : emit(LoginInicialState());
-
   void validarDados(String email, String senha) {
     final loginValido = _validarLogin(email);
     final senhaValida = _validarSenha(senha);

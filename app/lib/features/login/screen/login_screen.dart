@@ -51,9 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
     dependencia<ILoginNavigator>().irParaHome(podeVoltar: false);
   }
 
-  _aoApertarIconeOlho(BuildContext context, bool estaVisivel) {
-    BlocProvider.of<LoginScreenCubit>(context)
-        .alterarVisibilidadeSenha(estaVisivel);
+  bool _esconderSenha = true;
+  _aoApertarIconeOlho() {
+    _esconderSenha = !_esconderSenha;
+    setState(() {});
   }
 
   _validarDados(BuildContext context) {
@@ -108,16 +109,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Strings.senha,
                         _controllerSenha,
                         state is CredenciaisInvalidasState,
-                        state is SenhaVisivelState ? false : true,
+                        _esconderSenha,
                         context,
                         true,
                         icone: state is CredenciaisInvalidasState
                             ? IconesAplicacao.iconeErro
                             : IconesAplicacao.iconeOlho,
-                        aoApertarIcone: () => _aoApertarIconeOlho(
-                          context,
-                          state is SenhaVisivelState,
-                        ),
+                        aoApertarIcone: () => _aoApertarIconeOlho(),
                       ),
                       if (state is CredenciaisInvalidasState)
                         _buildMessagemCredenciaisInvalidas(),

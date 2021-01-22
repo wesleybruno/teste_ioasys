@@ -14,11 +14,6 @@ class LoadingState extends LoginState {
   List<Object> get props => [];
 }
 
-class SenhaVisivelState extends LoginState {
-  @override
-  List<Object> get props => [];
-}
-
 class DadosInvalidoState extends LoginState {
   @override
   List<Object> get props => [];
