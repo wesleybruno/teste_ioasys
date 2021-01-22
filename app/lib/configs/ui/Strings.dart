@@ -13,7 +13,7 @@ abstract class Strings {
   static const tentarNovamente = 'Tentar Novamente';
   static const offline = 'Você está Off-line';
   static const naoConseguimosVerificarInternet =
-      'Não consegimos verificar sua conexão com a internet.';
+      'Não conseguimos verificar sua conexão com a internet.';
 
   static const tenteMaisTarde =
       'Parece que ocorreu algum erro, por favor tente mais tarde.';
