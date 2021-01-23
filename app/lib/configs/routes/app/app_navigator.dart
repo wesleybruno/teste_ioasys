@@ -1,13 +1,13 @@
 import 'package:sailor/sailor.dart';
-import 'package:teste_selecao/configs/routes/login/i_login_navigator.dart';
-import 'package:teste_selecao/configs/routes/login/login_routes.dart';
+import 'package:teste_selecao/configs/routes/app/i_app_navigator.dart';
+import 'package:teste_selecao/configs/routes/app/app_routes.dart';
 import 'package:teste_selecao/configs/routes/routes.dart';
 
-class LoginNavigator implements ILoginNavigator {
+class AppNavigator implements IAppNavigator {
   @override
   irParaHome({bool podeVoltar = false}) {
     Routes.sailor.navigate(
-      LoginRoutes.home,
+      AppRoutes.home,
       navigationType:
           podeVoltar ? NavigationType.push : NavigationType.popAndPushNamed,
     );
@@ -16,7 +16,16 @@ class LoginNavigator implements ILoginNavigator {
   @override
   irParaLogin({bool podeVoltar = false}) {
     Routes.sailor.navigate(
-      LoginRoutes.login,
+      AppRoutes.login,
+      navigationType:
+          podeVoltar ? NavigationType.push : NavigationType.popAndPushNamed,
+    );
+  }
+
+  @override
+  irParaPerfil({bool podeVoltar = true}) {
+    Routes.sailor.navigate(
+      AppRoutes.perfil,
       navigationType:
           podeVoltar ? NavigationType.push : NavigationType.popAndPushNamed,
     );

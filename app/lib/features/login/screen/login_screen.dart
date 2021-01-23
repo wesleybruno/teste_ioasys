@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teste_selecao/configs/routes/login/i_login_navigator.dart';
+import 'package:teste_selecao/configs/routes/app/i_app_navigator.dart';
 import 'package:teste_selecao/configs/ui/Cores.dart';
 import 'package:teste_selecao/configs/ui/DimensoesTela.dart';
 import 'package:teste_selecao/configs/ui/Fontes.dart';
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _irParaHome() {
-    dependencia<ILoginNavigator>().irParaHome(podeVoltar: false);
+    dependencia<IAppNavigator>().irParaHome(podeVoltar: false);
   }
 
   bool _esconderSenha = true;

@@ -1,4 +1,5 @@
-abstract class ILoginNavigator {
+abstract class IAppNavigator {
   irParaHome({bool podeVoltar = false});
   irParaLogin({bool podeVoltar = false});
+  irParaPerfil({bool podeVoltar = true});
 }

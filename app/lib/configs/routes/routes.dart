@@ -1,7 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:sailor/sailor.dart';
-import 'package:teste_selecao/configs/routes/login/login_routes.dart';
+import 'package:teste_selecao/configs/routes/app/app_routes.dart';
 
 class Routes {
   static final sailor = Sailor(
@@ -20,7 +20,7 @@ class Routes {
   static void createRoutes() {
     sailor.addRoutes(
       [
-        ...LoginRoutes.getRoutes(),
+        ...AppRoutes.getRoutes(),
       ],
     );
   }

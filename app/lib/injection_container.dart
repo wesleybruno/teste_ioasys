@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:teste_selecao/configs/client/check_connectivty.dart';
 import 'package:teste_selecao/configs/client/custom_dio.dart';
-import 'package:teste_selecao/configs/routes/login/i_login_navigator.dart';
-import 'package:teste_selecao/configs/routes/login/login_navigator.dart';
+import 'package:teste_selecao/configs/routes/app/i_app_navigator.dart';
+import 'package:teste_selecao/configs/routes/app/app_navigator.dart';
 import 'package:teste_selecao/configs/utils/LocalStorage.dart';
 import 'package:teste_selecao/configs/utils/RequestApiProvider.dart';
 import 'package:teste_selecao/configs/utils/Validadores.dart';
@@ -66,8 +66,8 @@ Future<void> init() async {
     ),
   );
 
-  dependencia.registerSingleton<ILoginNavigator>(
-    LoginNavigator(),
+  dependencia.registerSingleton<IAppNavigator>(
+    AppNavigator(),
   );
 
   dependencia.registerLazySingleton<RealizarLoginUseCase>(

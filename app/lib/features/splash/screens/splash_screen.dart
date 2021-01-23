@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teste_selecao/configs/routes/login/i_login_navigator.dart';
+import 'package:teste_selecao/configs/routes/app/i_app_navigator.dart';
 import 'package:teste_selecao/configs/ui/DimensoesTela.dart';
 import 'package:teste_selecao/configs/ui/Icones.dart';
 import 'package:teste_selecao/features/splash/screens/bloc/splash_cubit.dart';
@@ -15,13 +15,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   _irParaHome() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      dependencia<ILoginNavigator>().irParaHome(podeVoltar: false);
+      dependencia<IAppNavigator>().irParaHome(podeVoltar: false);
     });
   }
 
   _irParaLogin() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      dependencia<ILoginNavigator>().irParaLogin(podeVoltar: false);
+      dependencia<IAppNavigator>().irParaLogin(podeVoltar: false);
     });
   }
 

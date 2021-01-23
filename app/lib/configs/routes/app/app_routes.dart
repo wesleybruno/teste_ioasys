@@ -2,32 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:sailor/sailor.dart';
 import 'package:teste_selecao/features/home/screen/home_screen.dart';
 import 'package:teste_selecao/features/login/screen/login_screen.dart';
+import 'package:teste_selecao/features/perfil/perfil_empresa_screen.dart';
 import 'package:teste_selecao/features/splash/screens/splash_screen.dart';
 
-abstract class LoginRoutes {
+abstract class AppRoutes {
   static final splashScreen = '/splash';
   static final home = '/home';
   static final login = '/login';
+  static final perfil = '/perfil';
 
   static getRoutes() {
     return [
       SailorRoute(
-        name: LoginRoutes.splashScreen,
+        name: AppRoutes.splashScreen,
         builder: (context, args, params) => Scaffold(body: SplashScreen()),
         defaultTransitions: [
           SailorTransition.slide_from_right,
         ],
       ),
       SailorRoute(
-        name: LoginRoutes.login,
+        name: AppRoutes.login,
         builder: (context, args, params) => Scaffold(body: LoginScreen()),
         defaultTransitions: [
           SailorTransition.slide_from_right,
         ],
       ),
       SailorRoute(
-        name: LoginRoutes.home,
+        name: AppRoutes.home,
         builder: (context, args, params) => Scaffold(body: HomeScreen()),
+        defaultTransitions: [
+          SailorTransition.slide_from_right,
+        ],
+      ),
+      SailorRoute(
+        name: AppRoutes.perfil,
+        builder: (context, args, params) => Scaffold(
+          body: PefilEmpresaScreen(),
+        ),
         defaultTransitions: [
           SailorTransition.slide_from_right,
         ],
