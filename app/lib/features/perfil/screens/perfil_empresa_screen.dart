@@ -42,12 +42,12 @@ class _PefilEmpresaScreenState extends State<PefilEmpresaScreen> {
         builder: (context, state) {
           if (state is LoadingState) return CustomLoading();
 
-          if (state is NoInternet)
+          if (state is ApiReturnNoInternet)
             return SemInternetWidget(
               aoApertarTentarNovamente: () => _recarregar(context),
             );
 
-          if (state is ApiError)
+          if (state is ApiReturnError)
             return ErroApiWidget(
               aoApertarTentarNovamente: () => _recarregar(context),
             );

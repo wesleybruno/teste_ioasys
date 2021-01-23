@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
         builder: (context, state) {
-          if (state is NoInternet)
+          if (state is ApiReturnNoInternet)
             return SemInternetWidget(
               aoApertarTentarNovamente: () => _aoApertarLogin(context),
             );

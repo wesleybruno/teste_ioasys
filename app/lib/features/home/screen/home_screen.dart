@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         aoApertarTentarNovamente: () =>
                             _recarregar(context, erroAoBuscar: true),
                       ),
-                    if (state is ApiError)
+                    if (state is ApiReturnError)
                       ErroApiWidget(
                         aoApertarTentarNovamente: () =>
                             _recarregar(context, erroAoBuscar: true),

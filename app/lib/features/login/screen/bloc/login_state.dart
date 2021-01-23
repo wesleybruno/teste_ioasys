@@ -36,12 +36,12 @@ class CredenciaisValidasState extends LoginState {
   List<Object> get props => [];
 }
 
-class NoInternet extends LoginState {
+class ApiReturnNoInternet extends LoginState {
   @override
   List<Object> get props => [];
 }
 
-class ApiError extends LoginState {
+class ApiReturnError extends LoginState {
   @override
   List<Object> get props => [];
 }

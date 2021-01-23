@@ -28,7 +28,7 @@ class NoInternet extends HomeState {
   List<Object> get props => [];
 }
 
-class ApiError extends HomeState {
+class ApiReturnError extends HomeState {
   @override
   List<Object> get props => [];
 }

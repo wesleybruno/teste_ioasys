@@ -31,9 +31,9 @@ class PerfilEmpresaCubit extends Cubit<PerfilEmpresaState>
       }
 
       if (error.statusCode == null) {
-        return emit(NoInternet());
+        return emit(ApiReturnNoInternet());
       }
-      emit(ApiError());
+      emit(ApiReturnError());
     }, (empresas) {
       return emit(DadosCarregadosState(enterpriseModel: empresas));
     });

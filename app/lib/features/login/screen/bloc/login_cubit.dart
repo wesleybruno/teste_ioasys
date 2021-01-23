@@ -50,7 +50,7 @@ class LoginScreenCubit extends Cubit<LoginState> {
 
     result.fold((error) {
       if (error.statusCode == null) {
-        return emit(NoInternet());
+        return emit(ApiReturnNoInternet());
       }
       emit(CredenciaisInvalidasState(
         mensagem: error.message,

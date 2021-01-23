@@ -40,7 +40,7 @@ class HomeScreenCubit extends Cubit<HomeState> with UnauthorizedMixin {
       if (error.statusCode == null) {
         return emit(NoInternet());
       }
-      emit(ApiError());
+      emit(ApiReturnError());
     }, (empresas) {
       return emit(DadosCarregadosState(empresasModel: empresas));
     });

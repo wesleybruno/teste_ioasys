@@ -23,12 +23,12 @@ class DadosCarregadosState extends PerfilEmpresaState {
   List<Object> get props => [EmpresasModel];
 }
 
-class NoInternet extends PerfilEmpresaState {
+class ApiReturnNoInternet extends PerfilEmpresaState {
   @override
   List<Object> get props => [];
 }
 
-class ApiError extends PerfilEmpresaState {
+class ApiReturnError extends PerfilEmpresaState {
   @override
   List<Object> get props => [];
 }
