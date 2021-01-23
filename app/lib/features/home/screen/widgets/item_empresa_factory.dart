@@ -50,34 +50,49 @@ class ItemEmpresaFactory {
   }
 
   Widget buildItemEnterprise(Enterprises enterprise) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.w),
-      child: Container(
-        padding: EdgeInsets.all(12.w),
-        margin: EdgeInsets.all(12.w),
-        height: 100.h,
+    return Container(
+      padding: EdgeInsets.all(12.w),
+      margin: EdgeInsets.all(12.w),
+      height: 100.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
         color: _getTipoEmpresa(enterprise.enterpriseType?.enterpriseTypeName),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.w),
+            child: Container(
               height: 80.h,
               width: 80.w,
               child: CachedImage(
                   imageUrl:
                       'https://empresas.ioasys.com.br/${enterprise.photo}'),
             ),
-            Column(
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.w),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Expanded(
+                  child: Container(
+                    width: 200.w,
+                    child: Text(
+                      '${enterprise.enterpriseName}',
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
                 Text('${enterprise.city} - ${enterprise.country}'),
                 Text(enterprise.enterpriseType.enterpriseTypeName),
               ],
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

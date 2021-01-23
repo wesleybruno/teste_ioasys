@@ -11,7 +11,6 @@ import 'package:teste_selecao/features/home/screen/bloc/home_cubit.dart';
 import 'package:teste_selecao/features/home/screen/widgets/item_empresa_factory.dart';
 import 'package:teste_selecao/features/home/screen/widgets/top_container.dart';
 import 'package:teste_selecao/injection_container.dart';
-import 'package:teste_selecao/widgets/cached_image/cached_image.dart';
 import 'package:teste_selecao/widgets/campo_form/campo_form.dart';
 import 'package:teste_selecao/widgets/custom_loading/custom_loading.dart';
 import 'package:teste_selecao/widgets/error_widgets/erro_api_widget.dart';
@@ -25,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double _alturaTopContainer = 200.h;
   HomeScreenCubit cubit;
   ItemEmpresaFactory itemEmpresaFactory = ItemEmpresaFactory();
+  TextEditingController _controllerSearch = TextEditingController();
 
   _alterarAlturaContainer(bool comFoco) {
     setState(() {
@@ -35,12 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     cubit = dependencia<HomeScreenCubit>();
-    cubit.buscarEmpresas(termoBusca: '');
+    cubit.buscarEmpresas(termoBusca: _controllerSearch.text);
     super.initState();
   }
 
   _recarregar(BuildContext context) {
-    BlocProvider.of<HomeScreenCubit>(context).buscarEmpresas(termoBusca: '');
+    BlocProvider.of<HomeScreenCubit>(context)
+        .buscarEmpresas(termoBusca: _controllerSearch.text);
+  }
+
+  @override
+  void dispose() {
+    _controllerSearch.dispose();
+    super.dispose();
   }
 
   @override
@@ -56,9 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   TopContainer(alturaContainer: _alturaTopContainer),
                   if (state is LoadingState)
-                    Container(
-                      margin: EdgeInsets.only(top: 200.h),
-                      child: CustomLoading(),
+                    Expanded(
+                      child: Center(
+                        child: CustomLoading(),
+                      ),
                     ),
                   if (state is DadosCarregadosState)
                     _buildContent(
@@ -71,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                 ],
               ),
-              _buildSearchBar(),
+              _buildSearchBar(context),
             ],
           );
         },
@@ -90,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(BuildContext context) {
     return AnimatedPositioned(
       top: _alturaTopContainer - 22.h,
       duration: Duration(milliseconds: 500),
@@ -99,7 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: CampoForm(
           onFocus: (focus) => _alterarAlturaContainer(focus),
           hintText: Strings.pesquisePorEmpresas,
+          onChange: (_) => _recarregar(context),
           fillColor: Cores.cinza[100],
+          controller: _controllerSearch,
           hintColor: Cores.cinza[200],
           prefixIcon: Container(
             padding: EdgeInsets.all(10.w),

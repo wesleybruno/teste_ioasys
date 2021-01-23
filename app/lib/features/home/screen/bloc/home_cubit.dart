@@ -19,10 +19,13 @@ class HomeScreenCubit extends Cubit<HomeState> with UnauthorizedMixin {
           HomeInicialState(),
         );
 
-  Future<void> _buscarEmpresas(String termoBusca) async {
-    emit(LoadingState());
+  String _ultimoTermoBuscado;
 
-    await Future.delayed(Duration(milliseconds: 1500), () {});
+  Future<void> _buscarEmpresas(String termoBusca) async {
+    if (_ultimoTermoBuscado == termoBusca) return;
+    _ultimoTermoBuscado = termoBusca;
+
+    emit(LoadingState());
 
     final result = await _buscarEmpresasUseCase(termoBusca);
 

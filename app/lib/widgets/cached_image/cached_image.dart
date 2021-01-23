@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:teste_selecao/configs/ui/Cores.dart';
 import 'package:teste_selecao/configs/ui/DimensoesTela.dart';
+import 'package:teste_selecao/configs/ui/Icones.dart';
 
 class CachedImage extends StatelessWidget {
   final String imageUrl;
@@ -19,9 +20,7 @@ class CachedImage extends StatelessWidget {
           padding: EdgeInsets.all(
             20.w,
           ),
-          child: Container(
-            color: Cores.claro,
-          ),
+          child: Container(child: Image.asset(IconesAplicacao.logo)),
         ),
       ),
       errorWidget: (context, url, error) => Container(
@@ -29,9 +28,7 @@ class CachedImage extends StatelessWidget {
         padding: EdgeInsets.all(
           5.w,
         ),
-        child: Container(
-          color: Cores.claro,
-        ),
+        child: Container(child: Image.asset(IconesAplicacao.logo)),
       ),
     );
   }

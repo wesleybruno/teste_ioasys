@@ -19,6 +19,7 @@ class EmpresasDataSource implements IEmpresasDataSource {
     return await _requestApiProvider.execute(
       Endpoint(
         data: null,
+        queryParameters: <String, dynamic>{'name': termoBusca},
         method: EndPointMethod.get,
         url: '/v1/enterprises',
       ),

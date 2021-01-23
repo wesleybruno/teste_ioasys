@@ -25,7 +25,7 @@ class RequestApiProvider {
       Response response;
       switch (endpoint.method) {
         case EndPointMethod.get:
-          response = await getAsync(endpoint.url);
+          response = await getAsync(endpoint.finalUrl());
           break;
         case EndPointMethod.post:
           response = await post(endpoint.url, endpoint.data);

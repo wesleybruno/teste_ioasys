@@ -17,6 +17,19 @@ class Endpoint {
     this.headers,
   });
 
+  String finalUrl() {
+    if (queryParameters != null) {
+      return url + '?' + queryString();
+    }
+
+    return url;
+  }
+
+  String queryString() {
+    String queryString = Uri(queryParameters: parseQueryParameters()).query;
+    return queryString;
+  }
+
   Map<String, String> parseQueryParameters() {
     final Map<String, String> _queryParameters =
         queryParameters?.map((key, dynamic value) {
