@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sailor/sailor.dart';
+import 'package:teste_selecao/configs/routes/routes.dart';
 import 'package:teste_selecao/configs/ui/Cores.dart';
 import 'package:teste_selecao/configs/ui/DimensoesTela.dart';
 import 'package:teste_selecao/configs/ui/Fontes.dart';
@@ -33,6 +34,10 @@ class _PefilEmpresaScreenState extends State<PefilEmpresaScreen> {
     cubit.buscarById(empresaId);
   }
 
+  _aoApertarVoltar() {
+    Routes.sailor.pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     _buscarDados(context);
@@ -62,74 +67,97 @@ class _PefilEmpresaScreenState extends State<PefilEmpresaScreen> {
   }
 
   _buildContent(PerfilEmpresaModel perfilEmpresaModel) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            child: CachedImage(
-              imageUrl:
-                  'https://empresas.ioasys.com.br/${perfilEmpresaModel.enterprise.photo}',
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Cores.ruby,
+        ),
+        backgroundColor: Cores.cinza[50],
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          perfilEmpresaModel.enterprise.enterpriseName,
+          style: TextStyle(
+            fontSize: 20.ssp,
+            fontFamily: Fontes.montserrat,
+            fontWeight: Fontes.semiBold,
+            color: Cores.preto,
           ),
-          Container(
-            padding: EdgeInsets.all(12.w),
-            child: Text(
-              '${perfilEmpresaModel.enterprise.enterpriseName}',
-              style: TextStyle(
-                fontSize: 14.ssp,
-                fontFamily: Fontes.montserrat,
-                color: Cores.preto,
+          textAlign: TextAlign.center,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 15.h,
+            ),
+            Container(
+              child: CachedImage(
+                imageUrl:
+                    'https://empresas.ioasys.com.br/${perfilEmpresaModel.enterprise.photo}',
               ),
-              textAlign: TextAlign.left,
             ),
-          ),
-          Container(
-            padding: EdgeInsets.all(12.w),
-            child: Text(
-              '${perfilEmpresaModel.enterprise.description}',
-              style: TextStyle(
-                fontSize: 12.ssp,
-                fontFamily: Fontes.montserrat,
-                color: Cores.cinza[200],
+            Container(
+              padding: EdgeInsets.all(12.w),
+              child: Text(
+                '${perfilEmpresaModel.enterprise.enterpriseName}',
+                style: TextStyle(
+                  fontSize: 14.ssp,
+                  fontFamily: Fontes.montserrat,
+                  color: Cores.preto,
+                ),
+                textAlign: TextAlign.left,
               ),
-              textAlign: TextAlign.justify,
             ),
-          ),
-          _buildItemList(
-            Icon(Icons.monetization_on),
-            '${perfilEmpresaModel.enterprise.sharePrice.emReal}',
-          ),
-          _buildItemList(
-            Icon(Icons.location_city_outlined),
-            '${perfilEmpresaModel.enterprise.city}-${perfilEmpresaModel.enterprise.country}',
-          ),
-          _buildItemList(
-            Icon(Icons.phone),
-            '${perfilEmpresaModel?.enterprise?.phone}',
-          ),
-          _buildItemList(
-            _buildImmageIcon(
-              IconesAplicacao.iconeFaceBook,
-              Cores.preto,
+            Container(
+              padding: EdgeInsets.all(12.w),
+              child: Text(
+                '${perfilEmpresaModel.enterprise.description}',
+                style: TextStyle(
+                  fontSize: 12.ssp,
+                  fontFamily: Fontes.montserrat,
+                  color: Cores.cinza[200],
+                ),
+                textAlign: TextAlign.justify,
+              ),
             ),
-            '${perfilEmpresaModel.enterprise.facebook}',
-          ),
-          _buildItemList(
-            _buildImmageIcon(
-              IconesAplicacao.iconeTwitter,
-              Cores.preto,
+            _buildItemList(
+              Icon(Icons.monetization_on),
+              '${perfilEmpresaModel.enterprise.sharePrice.emReal}',
             ),
-            '${perfilEmpresaModel.enterprise.twitter}',
-          ),
-          _buildItemList(
-            _buildImmageIcon(
-              IconesAplicacao.iconeEmail,
-              Cores.preto,
+            _buildItemList(
+              Icon(Icons.location_city_outlined),
+              '${perfilEmpresaModel.enterprise.city}-${perfilEmpresaModel.enterprise.country}',
             ),
-            '${perfilEmpresaModel.enterprise.emailEnterprise}',
-          ),
-        ],
+            _buildItemList(
+              Icon(Icons.phone),
+              '${perfilEmpresaModel?.enterprise?.phone}',
+            ),
+            _buildItemList(
+              _buildImmageIcon(
+                IconesAplicacao.iconeFaceBook,
+                Cores.preto,
+              ),
+              '${perfilEmpresaModel.enterprise.facebook}',
+            ),
+            _buildItemList(
+              _buildImmageIcon(
+                IconesAplicacao.iconeTwitter,
+                Cores.preto,
+              ),
+              '${perfilEmpresaModel.enterprise.twitter}',
+            ),
+            _buildItemList(
+              _buildImmageIcon(
+                IconesAplicacao.iconeEmail,
+                Cores.preto,
+              ),
+              '${perfilEmpresaModel.enterprise.emailEnterprise}',
+            ),
+          ],
+        ),
       ),
     );
   }

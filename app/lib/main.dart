@@ -10,7 +10,7 @@ void main() async {
   await injection.init();
   Routes.createRoutes();
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Cores.transparente),
+    SystemUiOverlayStyle(statusBarColor: Cores.preto),
   );
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],

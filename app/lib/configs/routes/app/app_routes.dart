@@ -41,9 +41,7 @@ abstract class AppRoutes {
             name: 'enterprise_id',
           ),
         ],
-        builder: (context, args, params) => Scaffold(
-          body: PefilEmpresaScreen(),
-        ),
+        builder: (context, args, params) => PefilEmpresaScreen(),
         defaultTransitions: [
           SailorTransition.slide_from_right,
         ],
