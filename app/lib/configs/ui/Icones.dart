@@ -14,6 +14,10 @@ class IconesAplicacao {
   static String get logoHome => _comum(nomeIcone: 'logo_home');
   static String get logo => _comum(nomeIcone: 'logo');
 
+  static String get iconeFaceBook => _comum(nomeIcone: 'icone_facebook');
+  static String get iconeTwitter => _comum(nomeIcone: 'icone_twitter');
+  static String get iconeEmail => _comum(nomeIcone: 'icone_email');
+
   static String get logoHome1 => _comum(nomeIcone: 'logo_home1');
   static String get logoHome2 => _comum(nomeIcone: 'logo_home2');
   static String get logoHome3 => _comum(nomeIcone: 'logo_home3');

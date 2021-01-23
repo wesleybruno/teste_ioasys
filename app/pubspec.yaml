@@ -20,6 +20,7 @@ dependencies:
   equatable: ^1.2.5
   flutter_bloc: ^6.1.1
   get_it: ^5.0.3
+  intl: ^0.16.0
   sailor: ^0.7.1
   shared_preferences: ^0.5.12+4
 
