@@ -102,14 +102,17 @@ class ItemEmpresaFactory {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.w),
-              child: Container(
-                height: 80.h,
-                width: 80.w,
-                child: CachedImage(
-                    imageUrl:
-                        'https://empresas.ioasys.com.br/${enterprise.photo}'),
+            Hero(
+              tag: '${enterprise.photo}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.w),
+                child: Container(
+                  height: 80.h,
+                  width: 80.w,
+                  child: CachedImage(
+                      imageUrl:
+                          'https://empresas.ioasys.com.br/${enterprise.photo}'),
+                ),
               ),
             ),
             Padding(

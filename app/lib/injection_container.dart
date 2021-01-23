@@ -18,6 +18,7 @@ import 'package:teste_selecao/features/login/screen/bloc/login_cubit.dart';
 import 'package:teste_selecao/features/login/usecases/gravar_cabecalhos_local_usecase.dart';
 import 'package:teste_selecao/features/login/usecases/limpar_cabecalhos_usecase.dart';
 import 'package:teste_selecao/features/login/usecases/realizar_login_usecase.dart';
+import 'package:teste_selecao/features/perfil/injection_container.dart';
 import 'package:teste_selecao/features/splash/screens/bloc/splash_cubit.dart';
 import 'package:teste_selecao/features/splash/usecases/buscar_cabecalhos_local_usecase.dart';
 
@@ -133,4 +134,6 @@ Future<void> init() async {
       buscarEmpresasUseCase: dependencia<BuscarEmpresasUseCase>(),
     ),
   );
+
+  PerfilInjection()..injetar(dependencia);
 }
