@@ -8,6 +8,7 @@ import 'package:teste_selecao/widgets/custom_field/custom_field.dart';
 class CampoForm extends StatelessWidget {
   final titulo;
   final hintText;
+  final Color hintColor;
   final fillColor;
   final borderColor;
   final TextStyle textStyle;
@@ -29,7 +30,9 @@ class CampoForm extends StatelessWidget {
   final bool mandatory;
   final bool obscureText;
   final Widget suffixIcon;
+  final Widget prefixIcon;
   final EdgeInsets padding;
+  final Function onFocus;
   final width;
   final height;
   final Color focusColor;
@@ -39,7 +42,9 @@ class CampoForm extends StatelessWidget {
     Key key,
     this.titulo,
     this.hintText = '',
+    this.hintColor,
     this.padding,
+    this.onFocus,
     this.fillColor,
     this.textStyle,
     this.borderColor,
@@ -62,6 +67,7 @@ class CampoForm extends StatelessWidget {
     this.maxLines,
     this.mandatory = false,
     this.suffixIcon,
+    this.prefixIcon,
     this.obscureText,
     this.focusColor,
     this.possuiErro,
@@ -95,11 +101,13 @@ class CampoForm extends StatelessWidget {
               ),
           child: CustomField(
             hintText: hintText,
-            hintColor: Cores.ruby,
+            hintColor: hintColor ?? Cores.ruby,
             enable: enable,
+            onFocus: onFocus,
             max: max,
             obscureText: obscureText ?? false,
             suffixIcon: suffixIcon,
+            prefixIcon: prefixIcon,
             width: width != null ? width.w : 374.w,
             height: height != null ? height : 14.h,
             maxLines: maxLines,

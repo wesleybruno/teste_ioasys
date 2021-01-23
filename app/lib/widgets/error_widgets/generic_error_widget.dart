@@ -11,6 +11,7 @@ class GenericErrorWidget extends StatelessWidget {
   final String semanticText;
   final String textoBotao;
   final Color corTexto;
+  final IconData iconeErro;
   final Color corIcone;
 
   const GenericErrorWidget({
@@ -21,6 +22,7 @@ class GenericErrorWidget extends StatelessWidget {
     this.semanticText,
     this.textoBotao,
     this.corTexto,
+    this.iconeErro,
     this.corIcone,
   }) : super(key: key);
 
@@ -38,9 +40,9 @@ class GenericErrorWidget extends StatelessWidget {
             width: 50.w,
             height: 50.h,
             child: Icon(
-              Icons.perm_scan_wifi_outlined,
+              iconeErro,
               color: corIcone ?? Cores.preto,
-              size: 24.0,
+              size: 48.h,
               semanticLabel: semanticText,
             ),
           ),

@@ -25,7 +25,9 @@ class CustomField extends StatelessWidget {
   final int max;
   final bool obscureText;
   final Widget suffixIcon;
+  final Widget prefixIcon;
   final bool exibirBordaErro;
+  final Function onFocus;
   final width;
   final height;
 
@@ -53,8 +55,10 @@ class CustomField extends StatelessWidget {
     this.onFieldSubmitted,
     this.obscureText,
     this.suffixIcon,
+    this.prefixIcon,
     this.hintColor,
     this.exibirBordaErro = false,
+    this.onFocus,
   }) : super(key: key);
 
   @override
@@ -63,57 +67,66 @@ class CustomField extends StatelessWidget {
       data: Theme.of(context).copyWith(
         splashColor: Cores.transparente,
       ),
-      child: Container(
-        width: width,
-        child: TextFormField(
-          obscureText: obscureText ?? false,
-          maxLines: obscureText == true ? 1 : maxLines,
-          maxLength: max,
-          enabled: enable,
-          initialValue: initialValue,
-          onChanged: onChange,
-          controller: controller,
-          validator: onValidator,
-          keyboardType: keyboardType,
-          inputFormatters: inputFormatter,
-          cursorColor: hintColor ?? Colors.black,
-          focusNode: currentFocus,
-          onFieldSubmitted: (text) {
-            if (nextFocus != null) {
-              _fieldFocusChange(context, currentFocus, nextFocus);
-            }
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(4.0),
+        child: Container(
+          width: width,
+          child: FocusScope(
+            child: Focus(
+              onFocusChange: onFocus,
+              child: TextFormField(
+                obscureText: obscureText ?? false,
+                maxLines: obscureText == true ? 1 : maxLines,
+                maxLength: max,
+                enabled: enable,
+                initialValue: initialValue,
+                onChanged: onChange,
+                controller: controller,
+                validator: onValidator,
+                keyboardType: keyboardType,
+                inputFormatters: inputFormatter,
+                cursorColor: hintColor ?? Colors.black,
+                focusNode: currentFocus,
+                onFieldSubmitted: (text) {
+                  if (nextFocus != null) {
+                    _fieldFocusChange(context, currentFocus, nextFocus);
+                  }
 
-            if (onFieldSubmitted != null) {
-              onFieldSubmitted(text);
-            }
-          },
-          style: textStyle ??
-              TextStyle(
-                color: Cores.preto,
-                fontWeight: Fontes.medium,
+                  if (onFieldSubmitted != null) {
+                    onFieldSubmitted(text);
+                  }
+                },
+                style: textStyle ??
+                    TextStyle(
+                      color: Cores.preto,
+                      fontWeight: Fontes.medium,
+                    ),
+                decoration: InputDecoration(
+                  suffixIcon: suffixIcon,
+                  prefixIcon: prefixIcon,
+                  isDense: true,
+                  contentPadding: EdgeInsets.all(height),
+                  filled: true,
+                  fillColor: fillColor,
+                  hintText: hintText,
+                  hintStyle: TextStyle(
+                    color: hintColor ?? Cores.cinza[200],
+                    fontWeight: Fontes.normal,
+                  ),
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: exibirBordaErro
+                      ? OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4),
+                          ),
+                          borderSide: BorderSide(
+                            color: borderColor,
+                          ),
+                        )
+                      : InputBorder.none,
+                ),
               ),
-          decoration: InputDecoration(
-            suffixIcon: suffixIcon,
-            isDense: true,
-            contentPadding: EdgeInsets.all(height),
-            filled: true,
-            fillColor: fillColor,
-            hintText: hintText,
-            hintStyle: TextStyle(
-              color: hintColor ?? Cores.cinza[200],
-              fontWeight: Fontes.normal,
             ),
-            focusedBorder: InputBorder.none,
-            enabledBorder: exibirBordaErro
-                ? OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(4),
-                    ),
-                    borderSide: BorderSide(
-                      color: borderColor,
-                    ),
-                  )
-                : InputBorder.none,
           ),
         ),
       ),

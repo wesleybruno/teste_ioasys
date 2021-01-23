@@ -18,6 +18,7 @@ class SemInternetWidget extends GenericErrorWidget {
           semanticText: Strings.dispositivoSemInternet,
           corIcone: corIcone,
           corTexto: corTexto,
+          iconeErro: Icons.perm_scan_wifi_outlined,
           textoBotao: Strings.tentarNovamente,
           textoExplicativo: Strings.naoConseguimosVerificarInternet,
           textoPrincipal: Strings.offline,

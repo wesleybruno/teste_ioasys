@@ -8,6 +8,8 @@ abstract class Cores {
   static final branco = Color(0xFFFFFFFF);
   static final vermelhorErro = Color(0xFFE00000);
 
+  static final chocolate = Color(0xFFD4621C);
+
   static const MaterialColor cinza = MaterialColor(
     0xFFF3F3F3,
     <int, Color>{

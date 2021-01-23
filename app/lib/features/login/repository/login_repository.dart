@@ -9,10 +9,10 @@ import 'package:teste_selecao/features/login/repository/login_decode_helper.dart
 
 class LoginRepository {
   LoginRepository({
-    @required repositorioDataSource,
-    @required repositoriosDecodeHelper,
-  })  : _dataSource = repositorioDataSource,
-        _decodeHelper = repositoriosDecodeHelper;
+    @required loginDataSource,
+    @required loginDecodeHelper,
+  })  : _dataSource = loginDataSource,
+        _decodeHelper = loginDecodeHelper;
 
   final ILoginDataSource _dataSource;
   final LoginDecodeHelper _decodeHelper;
@@ -29,7 +29,7 @@ class LoginRepository {
     final result = await this._dataSource.realizarLogin(
           body: loginModel.toJson(),
         );
-    return _decodeHelper.decodeRepositorios(result: result);
+    return _decodeHelper.decodeLogin(result: result);
   }
 
   void salvarCabecalhosLocal(
@@ -38,6 +38,10 @@ class LoginRepository {
     String accessToken,
   ) async {
     this._dataSource.salvarCabecalhosLocal(uuid, client, accessToken);
+  }
+
+  Future<void> limparCabecalhosLocal() async {
+    await this._dataSource.limparCabecalhosLocal();
   }
 
   Future<CabecalhoModel> buscarCabecalhosLocal() async {

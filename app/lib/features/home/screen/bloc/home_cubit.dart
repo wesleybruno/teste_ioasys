@@ -1,0 +1,69 @@
+import 'dart:async';
+
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teste_selecao/configs/utils/UnauthorizesMixin.dart';
+import 'package:teste_selecao/features/home/models/empresas_model.dart';
+import 'package:teste_selecao/features/home/usecases/buscar_empresas_usecase.dart';
+
+part 'home_state.dart';
+
+class HomeScreenCubit extends Cubit<HomeState> with UnauthorizedMixin {
+  BuscarEmpresasUseCase _buscarEmpresasUseCase;
+  Timer _debounce;
+  HomeScreenCubit({
+    @required BuscarEmpresasUseCase buscarEmpresasUseCase,
+  })  : _buscarEmpresasUseCase = buscarEmpresasUseCase,
+        super(
+          HomeInicialState(),
+        );
+
+  Future<void> _buscarEmpresas(String termoBusca) async {
+    emit(LoadingState());
+
+    await Future.delayed(Duration(milliseconds: 1500), () {});
+
+    final result = await _buscarEmpresasUseCase(termoBusca);
+
+    result.fold((error) {
+      if (error.statusCode == 401) {
+        redirecionarLogin();
+      }
+
+      if (error.statusCode == null) {
+        return emit(NoInternet());
+      }
+      emit(ApiError());
+    }, (empresas) {
+      return emit(DadosCarregadosState(empresasModel: empresas));
+    });
+  }
+
+  Future<void> buscarEmpresas({
+    String termoBusca,
+  }) async {
+    _iniciarDebounce(
+      callback: () => _buscarEmpresas(
+        termoBusca?.trim(),
+      ),
+    );
+  }
+
+  void _iniciarDebounce({Function callback}) {
+    if (_debounce?.isActive ?? false) {
+      _debounce.cancel();
+    }
+
+    _debounce = Timer(Duration(milliseconds: 700), () async {
+      callback();
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _debounce?.cancel();
+    _debounce = null;
+    return super.close();
+  }
+}

@@ -6,8 +6,7 @@ import 'package:teste_selecao/features/login/models/dados_invalidos_model.dart';
 import 'package:teste_selecao/features/login/models/usuario_model.dart';
 
 class LoginDecodeHelper {
-  Either<ApiResult, UsuarioModel> decodeRepositorios(
-      {@required ApiResult result}) {
+  Either<ApiResult, UsuarioModel> decodeLogin({@required ApiResult result}) {
     try {
       if (result is Success) {
         final uuid = result.responseHeaders["uid"];
@@ -15,7 +14,11 @@ class LoginDecodeHelper {
         final accessToken = result.responseHeaders["access-token"];
         final usuarioModel = UsuarioModel.fromJson(result.data);
 
-        usuarioModel.setAccessData(uuid, client, accessToken);
+        usuarioModel.setAccessData(
+          uuid,
+          accessToken,
+          client,
+        );
 
         return Right(usuarioModel);
       }

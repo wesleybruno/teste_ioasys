@@ -18,6 +18,7 @@ class ErroApiWidget extends GenericErrorWidget {
           semanticText: Strings.problemasComServidor,
           corIcone: corIcone,
           corTexto: corTexto,
+          iconeErro: Icons.error,
           textoBotao: Strings.tentarNovamente,
           textoExplicativo: Strings.desculpe,
           textoPrincipal: Strings.tenteMaisTarde,
