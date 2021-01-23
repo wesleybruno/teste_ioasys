@@ -25,10 +25,8 @@ class HomeScreenCubit extends Cubit<HomeState> with UnauthorizedMixin {
     String termoBusca, {
     bool erroAoBuscar = false,
   }) async {
-    if (!erroAoBuscar) {
-      if (_ultimoTermoBuscado == termoBusca) return;
-      _ultimoTermoBuscado = termoBusca;
-    }
+    if (_ultimoTermoBuscado == termoBusca && !erroAoBuscar) return;
+    _ultimoTermoBuscado = termoBusca;
 
     emit(LoadingState());
 
