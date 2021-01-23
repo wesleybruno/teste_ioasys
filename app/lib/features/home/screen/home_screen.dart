@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teste_selecao/configs/ui/Cores.dart';
 import 'package:teste_selecao/configs/ui/DimensoesTela.dart';
-import 'package:teste_selecao/configs/ui/Fontes.dart';
 import 'package:teste_selecao/configs/ui/Icones.dart';
 import 'package:teste_selecao/configs/ui/Strings.dart';
 import 'package:teste_selecao/features/home/models/empresas_model.dart';

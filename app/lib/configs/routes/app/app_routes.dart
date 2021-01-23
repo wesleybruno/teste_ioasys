@@ -36,6 +36,11 @@ abstract class AppRoutes {
       ),
       SailorRoute(
         name: AppRoutes.perfil,
+        params: [
+          SailorParam<int>(
+            name: 'enterprise_id',
+          ),
+        ],
         builder: (context, args, params) => Scaffold(
           body: PefilEmpresaScreen(),
         ),

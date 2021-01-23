@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:sailor/sailor.dart';
 import 'package:teste_selecao/configs/routes/app/i_app_navigator.dart';
 import 'package:teste_selecao/configs/routes/app/app_routes.dart';
@@ -23,11 +24,14 @@ class AppNavigator implements IAppNavigator {
   }
 
   @override
-  irParaPerfil({bool podeVoltar = true}) {
+  irParaPerfil({bool podeVoltar = true, @required int enterpriseId}) {
     Routes.sailor.navigate(
       AppRoutes.perfil,
       navigationType:
           podeVoltar ? NavigationType.push : NavigationType.popAndPushNamed,
+      params: {
+        'enterprise_id': enterpriseId,
+      },
     );
   }
 }
