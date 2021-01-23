@@ -21,9 +21,14 @@ class HomeScreenCubit extends Cubit<HomeState> with UnauthorizedMixin {
 
   String _ultimoTermoBuscado;
 
-  Future<void> _buscarEmpresas(String termoBusca) async {
-    if (_ultimoTermoBuscado == termoBusca) return;
-    _ultimoTermoBuscado = termoBusca;
+  Future<void> _buscarEmpresas(
+    String termoBusca, {
+    bool erroAoBuscar = false,
+  }) async {
+    if (!erroAoBuscar) {
+      if (_ultimoTermoBuscado == termoBusca) return;
+      _ultimoTermoBuscado = termoBusca;
+    }
 
     emit(LoadingState());
 
@@ -43,12 +48,11 @@ class HomeScreenCubit extends Cubit<HomeState> with UnauthorizedMixin {
     });
   }
 
-  Future<void> buscarEmpresas({
-    String termoBusca,
-  }) async {
+  Future<void> buscarEmpresas({String termoBusca, bool erroAoBuscar}) async {
     _iniciarDebounce(
       callback: () => _buscarEmpresas(
         termoBusca?.trim(),
+        erroAoBuscar: erroAoBuscar,
       ),
     );
   }

@@ -12,6 +12,7 @@ import 'package:teste_selecao/injection_container.dart';
 import 'package:teste_selecao/widgets/campo_form/campo_form.dart';
 import 'package:teste_selecao/widgets/custom_loading/custom_loading.dart';
 import 'package:teste_selecao/widgets/error_widgets/erro_api_widget.dart';
+import 'package:teste_selecao/widgets/error_widgets/sem_internet_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -37,9 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  _recarregar(BuildContext context) {
-    BlocProvider.of<HomeScreenCubit>(context)
-        .buscarEmpresas(termoBusca: _controllerSearch.text);
+  _recarregar(BuildContext context, {bool erroAoBuscar = false}) {
+    BlocProvider.of<HomeScreenCubit>(context).buscarEmpresas(
+        termoBusca: _controllerSearch.text, erroAoBuscar: erroAoBuscar);
   }
 
   @override
@@ -50,37 +51,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => cubit,
-      child: BlocBuilder<HomeScreenCubit, HomeState>(
-        builder: (context, state) {
-          return Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TopContainer(alturaContainer: _alturaTopContainer),
-                  if (state is LoadingState)
-                    Expanded(
-                      child: Center(
-                        child: CustomLoading(),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus.unfocus(),
+      child: BlocProvider(
+        create: (context) => cubit,
+        child: BlocBuilder<HomeScreenCubit, HomeState>(
+          builder: (context, state) {
+            return Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TopContainer(alturaContainer: _alturaTopContainer),
+                    if (state is LoadingState)
+                      Expanded(
+                        child: Center(
+                          child: CustomLoading(),
+                        ),
                       ),
-                    ),
-                  if (state is DadosCarregadosState)
-                    _buildContent(
-                      state.empresasModel.enterprises?.length,
-                      state?.empresasModel,
-                    ),
-                  if (state is ApiError)
-                    ErroApiWidget(
-                      aoApertarTentarNovamente: () => _recarregar(context),
-                    )
-                ],
-              ),
-              _buildSearchBar(context),
-            ],
-          );
-        },
+                    if (state is DadosCarregadosState)
+                      _buildContent(
+                        state.empresasModel.enterprises?.length,
+                        state?.empresasModel,
+                      ),
+                    if (state is NoInternet)
+                      SemInternetWidget(
+                        aoApertarTentarNovamente: () =>
+                            _recarregar(context, erroAoBuscar: true),
+                      ),
+                    if (state is ApiError)
+                      ErroApiWidget(
+                        aoApertarTentarNovamente: () =>
+                            _recarregar(context, erroAoBuscar: true),
+                      )
+                  ],
+                ),
+                _buildSearchBar(context),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
