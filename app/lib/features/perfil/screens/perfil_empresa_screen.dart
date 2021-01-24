@@ -58,7 +58,7 @@ class _PefilEmpresaScreenState extends State<PefilEmpresaScreen> {
             );
 
           if (state is DadosCarregadosState)
-            return _buildContent(state.enterpriseModel);
+            return _buildContent(context, state.enterpriseModel);
 
           return Container();
         },
@@ -66,7 +66,7 @@ class _PefilEmpresaScreenState extends State<PefilEmpresaScreen> {
     );
   }
 
-  _buildContent(PerfilEmpresaModel perfilEmpresaModel) {
+  _buildContent(BuildContext context, PerfilEmpresaModel perfilEmpresaModel) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
